@@ -1,0 +1,12 @@
+.edit-vacation {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.edit-vacation input[type="file"] {
+    display: none;
+}
+
+.edit-vacation img {
+    width: 300px;
+}

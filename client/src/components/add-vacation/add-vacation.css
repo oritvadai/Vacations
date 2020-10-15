@@ -1,0 +1,12 @@
+.add-vacation {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.add-vacation input[type="file"] {
+    display: none;
+}
+
+.add-vacation img {
+    width: 300px;
+}

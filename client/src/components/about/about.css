@@ -1,0 +1,9 @@
+.about h3 {
+    text-align: center;
+}
+
+.about .about-content {
+    margin: auto;
+    text-align: left;
+    width: fit-content;
+}

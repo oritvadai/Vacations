@@ -1,0 +1,10 @@
+.chart {
+    height: 100%;
+}
+
+canvas {
+    margin: auto;
+    margin-top: 5%;
+    width:80% !important;
+    height:70% !important;
+}

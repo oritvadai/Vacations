@@ -1,0 +1,6 @@
+.heading > h1 {
+    color: darkblue;
+    font-style: oblique;
+    text-shadow:  3px 3px 5px grey;
+    padding-top: 20px;
+}

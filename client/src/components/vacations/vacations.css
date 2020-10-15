@@ -1,0 +1,23 @@
+.vacations {
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+
+.vacations button {
+    float: right;
+}
+
+.unfollow-btn {
+    font-weight: bold;
+    color: green;
+    border: 1px solid green;
+    /* background-color: lightcoral; */
+}
+
+.follow-btn {
+    font-weight: bold;
+    color: darkblue;
+    border: 1px solid darkblue;
+    /* background-color: lightgreen; */
+}

@@ -1,0 +1,15 @@
+.admin {
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+
+.admin .fa-icon {
+    float: right;
+    color: steelblue;
+    margin-left: 5px;
+}
+
+.admin a {
+    font-weight: bold;
+}
