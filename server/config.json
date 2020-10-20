@@ -1,0 +1,20 @@
+{
+    "sql": {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "Vacations"
+    },
+    
+    "secrets": {
+        "expressSession": "I-Love-Kittens"
+    },
+    
+    "client": {
+        "port" : 3100
+    },
+    
+    "server": {
+        "port" : 3101
+    }
+}
