@@ -3,6 +3,8 @@ import "./edit-vacation.css";
 import { VacationModel } from "../../models/vacation-model";
 import axios from "axios";
 import { Heading } from "../heading/heading";
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 interface EditVacationState {
     vacation: VacationModel;
@@ -41,10 +43,10 @@ export class EditVacation extends Component<any, EditVacationState> {
         const vacationID = +this.props.match.params.id;
         try {
             const response = await axios.get<VacationModel>(
-                "http://localhost:3000/api/vacations/" + vacationID, { withCredentials: true });
+                serverUrl + "/api/vacations/" + vacationID, { withCredentials: true });
             const vacation = response.data;
             this.setState({ vacation });
-            this.setState({ preview: `http://localhost:3000/api/uploads/${this.state.vacation.picFileName}` });
+            this.setState({ preview: serverUrl + "/api/uploads/" + this.state.vacation.picFileName });
         }
         catch (err) {
             alert(err.message);
@@ -206,7 +208,7 @@ export class EditVacation extends Component<any, EditVacationState> {
         };
 
         try {
-            await axios.put<VacationModel>("http://localhost:3000/api/vacations/" +
+            await axios.put<VacationModel>(serverUrl + "/api/vacations/" +
                 this.state.vacation.vacationID, myFormData, { withCredentials: true });
             this.props.history.push("/admin");
         }

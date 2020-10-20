@@ -5,6 +5,8 @@ import { FollowedModel } from "../../models/followed-model";
 import axios from "axios";
 import { Heading } from "../heading/heading";
 import io from 'socket.io-client';
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 interface VacationsState {
     vacations: VacationModel[],
@@ -14,7 +16,7 @@ interface VacationsState {
 export class Vacations extends Component<any, VacationsState> {
 
     // connect to server with socket.io
-    private socket = io.connect("http://localhost:3000");
+    private socket = io.connect(serverUrl);
 
     public constructor(props: any) {
         super(props);
@@ -26,7 +28,7 @@ export class Vacations extends Component<any, VacationsState> {
 
     public async componentDidMount() {
         try {
-            const response = await axios.get<VacationModel[]>("http://localhost:3000/api/vacations", { withCredentials: true }); // { withCredentials: true } causes the cookie to be sent to server.
+            const response = await axios.get<VacationModel[]>(serverUrl + "/api/vacations", { withCredentials: true }); // { withCredentials: true } causes the cookie to be sent to server.
             const vacations = response.data;
             this.setState({ vacations });
             this.getFollowedVacations();
@@ -59,7 +61,7 @@ export class Vacations extends Component<any, VacationsState> {
 
     public async getFollowedVacations() {
         try {
-            const response = await axios.get<VacationModel[]>("http://localhost:3000/api/followed", { withCredentials: true }); // { withCredentials: true } causes the cookie to be sent to server.
+            const response = await axios.get<VacationModel[]>(serverUrl + "/api/followed", { withCredentials: true }); // { withCredentials: true } causes the cookie to be sent to server.
             const followed = response.data;
             this.setState({ followed });
             this.addFollowedToVacations()
@@ -82,7 +84,7 @@ export class Vacations extends Component<any, VacationsState> {
     private followVacation = async (vacationID: number | undefined) => {
         try {
             await axios.post<FollowedModel>(
-                "http://localhost:3000/api/followers", { vacationID: vacationID }, { withCredentials: true });
+                serverUrl + "/api/followers", { vacationID: vacationID }, { withCredentials: true });
             window.location.reload();
         }
         catch (err) {
@@ -93,7 +95,7 @@ export class Vacations extends Component<any, VacationsState> {
     private UnFollowVacation = async (vacationID: number | undefined) => {
 
         try {
-            await axios.delete("http://localhost:3000/api/followers/" + vacationID, { withCredentials: true });
+            await axios.delete(serverUrl + "/api/followers/" + vacationID, { withCredentials: true });
             window.location.reload();
         }
         catch (err) {
@@ -136,7 +138,7 @@ export class Vacations extends Component<any, VacationsState> {
                         <h3> {v.destination} </h3>
                         <h4>{this.dateToDMY(v.startDate)} - {this.dateToDMY(v.endDate)}</h4>
                         <div className="vacation-details">
-                            <img src={"http://localhost:3000/api/uploads/" + v.picFileName} alt={v.destination} />
+                            <img src={serverUrl + "/api/uploads/" + v.picFileName} alt={v.destination} />
                             <p>{v.description}</p>
                         </div>
 

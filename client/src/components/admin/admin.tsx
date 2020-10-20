@@ -8,6 +8,8 @@ import io from 'socket.io-client';
 import { faPenSquare } from "@fortawesome/free-solid-svg-icons";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 
 interface AdminState {
@@ -17,7 +19,7 @@ interface AdminState {
 export class Admin extends Component<any, AdminState> {
 
     // connect to server with socket.io
-    private socket = io.connect("http://localhost:3000");
+    private socket = io.connect(serverUrl);
 
     public constructor(props: any) {
         super(props);
@@ -28,7 +30,7 @@ export class Admin extends Component<any, AdminState> {
 
     public async componentDidMount() {
         try {
-            const response = await axios.get<VacationModel[]>("http://localhost:3000/api/vacations", { withCredentials: true });
+            const response = await axios.get<VacationModel[]>(serverUrl + "/api/vacations", { withCredentials: true });
             const vacations = response.data;
             this.setState({ vacations });
 
@@ -53,7 +55,7 @@ export class Admin extends Component<any, AdminState> {
         };
         try {
             await axios.delete<VacationModel>(
-                "http://localhost:3000/api/vacations/" + vacationID, { withCredentials: true });
+                serverUrl + "/api/vacations/" + vacationID, { withCredentials: true });
         }
         catch (err) {
             alert(err.message);
@@ -96,7 +98,7 @@ export class Admin extends Component<any, AdminState> {
                         <h4>{this.dateToDMY(v.startDate)} - {this.dateToDMY(v.endDate)}</h4>
 
                         <div className="vacation-details">
-                            <img src={"http://localhost:3000/api/uploads/" + v.picFileName} alt={v.destination} />
+                            <img src={serverUrl + "/api/uploads/" + v.picFileName} alt={v.destination} />
                             <p>{v.description}</p>
                         </div>
 

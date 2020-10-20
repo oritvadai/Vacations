@@ -3,6 +3,8 @@ import "./logout.css";
 import axios from "axios";
 import { store } from "../../redux/store";
 import { ActionType } from "../../redux/action-type";
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 export class Logout extends Component<any> {
 
@@ -13,7 +15,7 @@ export class Logout extends Component<any> {
     public async componentDidMount() {
 
         try {
-            await axios.post("http://localhost:3000/api/logout", null, { withCredentials: true });
+            await axios.post(serverUrl + "/api/logout", null, { withCredentials: true });
             store.dispatch({ type: ActionType.Logout });
             this.props.history.push("/login");
         }

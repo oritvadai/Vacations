@@ -6,6 +6,8 @@ import { Heading } from "../heading/heading";
 import { store } from "../../redux/store";
 import { ActionType } from "../../redux/action-type";
 import { NavLink } from "react-router-dom";
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 interface RegisterState {
     register: UserModel;
@@ -125,7 +127,7 @@ export class Register extends Component<any, RegisterState> {
         }
 
         try {
-            const response = await axios.post<UserModel>("http://localhost:3000/api/users", this.state.register, { withCredentials: true });
+            const response = await axios.post<UserModel>(serverUrl + "/api/users", this.state.register, { withCredentials: true });
             const user = response.data;
             store.dispatch({ type: ActionType.Login, payload: user });
             this.props.history.push("/vacations");

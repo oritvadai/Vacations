@@ -7,6 +7,8 @@ import { CredentialsModel } from "../../models/credentials-model";
 import { UserModel } from "../../models/user-model";
 import { store } from "../../redux/store";
 import { ActionType } from "../../redux/action-type";
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 interface LoginState {
     credentials: CredentialsModel;
@@ -73,7 +75,7 @@ export class Login extends Component<any, LoginState> {
         }
 
         try {
-            const response = await axios.post<UserModel>("http://localhost:3000/api/login", this.state.credentials, { withCredentials: true }); // { withCredentials: true } causes the cookie to be sent to server.
+            const response = await axios.post<UserModel>(serverUrl + "/api/login", this.state.credentials, { withCredentials: true }); // { withCredentials: true } causes the cookie to be sent to server.
             const user = response.data;
             store.dispatch({ type: ActionType.Login, payload: user });
             user.role === "admin" ? this.props.history.push("/admin") : this.props.history.push("/vacations");

@@ -6,6 +6,8 @@ import { FollowerCountModel } from "../../models/follower-count-model";
 import { VacationModel } from "../../models/vacation-model";
 import axios from "axios";
 import io from 'socket.io-client';
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 
 interface ChartState {
@@ -15,7 +17,7 @@ interface ChartState {
 export class Chart extends Component<any, ChartState> {
 
     // connect to server with socket.io
-    private socket = io.connect("http://localhost:3000");
+    private socket = io.connect(serverUrl);
 
     chartReference: React.RefObject<Bar>;
 
@@ -29,7 +31,7 @@ export class Chart extends Component<any, ChartState> {
 
     public async componentDidMount() {
         try {
-            const response = await axios.get<FollowerCountModel[]>("http://localhost:3000/api/followers-count", { withCredentials: true });
+            const response = await axios.get<FollowerCountModel[]>(serverUrl + "/api/followers-count", { withCredentials: true });
             const vacations = response.data;
 
             this.setState({ vacations });
@@ -40,7 +42,7 @@ export class Chart extends Component<any, ChartState> {
                 if (index === -1) {
                     // window.location.reload();
                     const response = await axios.get<VacationModel>(
-                        "http://localhost:3000/api/vacations/" + vacationID, { withCredentials: true });
+                        serverUrl + "/api/vacations/" + vacationID, { withCredentials: true });
                     const addedVacation = response.data;
                     let vacations = [...this.state.vacations];
                     vacations.push(new FollowerCountModel(addedVacation.vacationID, addedVacation.destination, 1));

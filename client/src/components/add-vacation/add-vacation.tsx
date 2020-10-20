@@ -3,6 +3,8 @@ import "./add-vacation.css";
 import { VacationModel } from "../../models/vacation-model";
 import axios from "axios";
 import { Heading } from "../heading/heading";
+const config = require("../../config.json");
+const serverUrl = config.server.url;
 
 interface AddVacationState {
     vacation: VacationModel;
@@ -205,7 +207,7 @@ export class AddVacation extends Component<any, AddVacationState> {
 
         try {
             await axios.post<VacationModel>(
-                "http://localhost:3000/api/vacations", myFormData, { withCredentials: true });
+                serverUrl + "/api/vacations", myFormData, { withCredentials: true });
             this.props.history.push("/admin");
         }
         catch (err) {
