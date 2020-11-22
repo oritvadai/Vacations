@@ -10,7 +10,7 @@ async function getAllVacationsAsync() {
     const sql = `SELECT vacationID, description, destination, picFileName, 
         DATE_FORMAT(startDate,'%Y-%m-%d') as startDate,
         DATE_FORMAT(endDate,'%Y-%m-%d') as endDate, price
-        FROM Vacations`;
+        FROM vacations`;
     const vacations = await dal.executeAsync(sql);
     return vacations;
 };
@@ -29,7 +29,7 @@ async function getVacationAsync(id) {
     const sql = `SELECT vacationID, description, destination, picFileName, 
         DATE_FORMAT(startDate,'%Y-%m-%d') as startDate,
         DATE_FORMAT(endDate,'%Y-%m-%d') as endDate, price
-        FROM Vacations
+        FROM vacations
         WHERE vacationID = ${id}`;
     const vacation = await dal.executeAsync(sql);
     return vacation[0];
@@ -45,7 +45,7 @@ async function addVacationAsync(vacation, image) {
     vacation.picFileName = fileName;
     image.mv("./uploads/" + fileName);
 
-    const sql = `INSERT INTO Vacations(description, destination, picFileName, startDate, endDate, price)
+    const sql = `INSERT INTO vacations(description, destination, picFileName, startDate, endDate, price)
         VALUES('${vacation.description}','${vacation.destination}','${vacation.picFileName}',
         '${vacation.startDate}','${vacation.endDate}',${vacation.price})`;
 
@@ -60,7 +60,7 @@ async function updateVacationAsync(vacation, image) {
         fs.mkdirSync("./uploads");
     }
 
-    const sqlFileName = `SELECT picFileName FROM Vacations WHERE vacationID = ${vacation.vacationID}`;
+    const sqlFileName = `SELECT picFileName FROM vacations WHERE vacationID = ${vacation.vacationID}`;
     const response = await dal.executeAsync(sqlFileName);
     const oldFileName = response[0].picFileName;
 
@@ -81,7 +81,7 @@ async function updateVacationAsync(vacation, image) {
     };
 
     const sqlUpdateVac = `
-        UPDATE Vacations SET
+        UPDATE vacations SET
         description = '${vacation.description}',
         destination = '${vacation.destination}',
         picFileName = '${vacation.picFileName}',
@@ -103,13 +103,13 @@ async function updateVacationAsync(vacation, image) {
 
 // Delete Vacation
 async function deleteVacationAsync(id) {
-    const sqlFileName = `SELECT picFileName FROM Vacations WHERE vacationID = ${id}`;
+    const sqlFileName = `SELECT picFileName FROM vacations WHERE vacationID = ${id}`;
     const response = await dal.executeAsync(sqlFileName);
     const picFileName = response[0].picFileName;
     // console.log("picFileName: " + picFileName);
 
     // delete uses cascade in mysql database to remove followed entries
-    const sqlDelVac = `DELETE FROM Vacations WHERE vacationID = ${id}`;
+    const sqlDelVac = `DELETE FROM vacations WHERE vacationID = ${id}`;
     await dal.executeAsync(sqlDelVac);
 
     // TODO: don't delete image if sql delete didn't work
@@ -120,7 +120,7 @@ async function deleteVacationAsync(id) {
 // Get Followers Count Data
 async function getFollowersCountAsync() {
     const sql = `SELECT vacations.vacationID, vacations.destination, COUNT(*) AS count
-        FROM vacations JOIN Followers
+        FROM vacations JOIN followers
         on vacations.vacationID = followers.vacationID
         GROUP BY followers.vacationID`;
     const followers = await dal.executeAsync(sql);
@@ -133,7 +133,7 @@ async function getFollowersCountAsync() {
 // Get Followed Vacations Per User
 async function getFollowedPerUserAsync(username) {
     const sql = `SELECT vacationID                                
-        FROM Followers as F JOIN Users as U              
+        FROM followers as F JOIN users as U              
         ON F.userID = U.userID
         WHERE U.username = '${username}'`;
     const followedPerUser = await dal.executeAsync(sql);
@@ -142,7 +142,7 @@ async function getFollowedPerUserAsync(username) {
 
 // Add Followed Vacation
 async function addFollowerAsync(username, vacationID) {
-    const sql = `INSERT INTO Followers(userID, vacationID)
+    const sql = `INSERT INTO followers(userID, vacationID)
         SELECT userID, ${vacationID} FROM users WHERE username = '${username}'`;
     const info = await dal.executeAsync(sql);
     return (info.affectedRows === 1);
@@ -150,7 +150,7 @@ async function addFollowerAsync(username, vacationID) {
 
 // Delete Followed Vacation
 async function deleteFollowerAsync(username, vacationID) {
-    const sql = `DELETE F FROM Followers AS F JOIN Users AS U
+    const sql = `DELETE F FROM followers AS F JOIN users AS U
         ON F.userID = U.userID
         WHERE U.username = '${username}' AND F.vacationID = ${vacationID}`;
     const info = await dal.executeAsync(sql);
@@ -162,7 +162,7 @@ async function deleteFollowerAsync(username, vacationID) {
 
 // Login (check if user or admin)
 async function loginAsync(username, password) {
-    const sql = `SELECT username, firstName, lastName, isAdmin FROM Users WHERE username = '${username}' AND password = '${password}'`;
+    const sql = `SELECT username, firstName, lastName, isAdmin FROM users WHERE username = '${username}' AND password = '${password}'`;
     const queryResult = await dal.executeAsync(sql);
     if (queryResult.length === 0) {
         return null;
@@ -178,7 +178,7 @@ async function loginAsync(username, password) {
 
 // Register New User
 async function addUserAsync(user) {
-    const sql = `INSERT INTO Users(firstName, lastName, username, password)
+    const sql = `INSERT INTO users(firstName, lastName, username, password)
         VALUES('${user.firstName}','${user.lastName}','${user.username}',
         '${user.password}')`;
     const info = await dal.executeAsync(sql);
