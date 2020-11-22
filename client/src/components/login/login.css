@@ -1,3 +1,10 @@
 .login {
     height: 100%;
 }
+
+#example {
+    border: 2px solid red;
+    width: fit-content;
+    margin: auto;
+    padding: 5px;
+}

@@ -89,8 +89,16 @@ export class Login extends Component<any, LoginState> {
         return (
             <div className="login">
                 <Heading>Welcome to VacationSite</Heading>
+
+                <div id="example">
+                    Demo user: user <br />
+                    Demo admin: admin <br />
+                    Passwords: abc123
+                </div>
+
+                <h2>Login</h2>
                 <form>
-                    <h2>Login</h2>
+
                     <input type="text" placeholder="username"
                         onChange={this.setUsername} value={this.state.credentials.username || ""} /><br />
                     <span className="errMsg">{this.state.errors.usernameErr}</span>

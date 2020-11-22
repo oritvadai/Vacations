@@ -12,8 +12,10 @@ const expressServer = express();
 expressServer.use(cors({ origin: `http://localhost:${config.client.port}`, credentials: true }));
 expressServer.use(express.json());
 expressServer.use(expressSession({
-    name: "authenticationCookie", secret: config.secrets.expressSession,
-    resave: true, saveUninitialized: false
+    name: "authenticationCookie", 
+    secret: config.secrets.expressSession,
+    resave: true, 
+    saveUninitialized: false
 }));
 expressServer.use(fileUpload());
 

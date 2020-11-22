@@ -3,7 +3,7 @@
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "Vacations"
+        "database": "vacations"
     },
     
     "secrets": {
