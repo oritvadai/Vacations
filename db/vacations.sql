@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2020 at 07:44 PM
+-- Generation Time: Nov 22, 2020 at 04:49 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,16 +40,16 @@ CREATE TABLE `followers` (
 --
 
 INSERT INTO `followers` (`userID`, `vacationID`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 7),
 (2, 1),
-(2, 3),
 (2, 6),
-(2, 7),
 (3, 2),
-(3, 3),
-(4, 1),
-(4, 2),
-(4, 3),
-(4, 6);
+(3, 5),
+(4, 5),
+(4, 7);
 
 -- --------------------------------------------------------
 
@@ -71,10 +71,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `firstName`, `lastName`, `username`, `password`, `isAdmin`) VALUES
-(1, 'Bruce', 'Wayne', 'brucew', 'batman', 1),
-(2, 'Alfred', 'Pennyworth', 'alfredp', 'superbutler', 0),
-(3, 'James', 'Gordon', 'jamesg', 'gothem911', 0),
-(4, 'Selina', 'Kyle', 'selinak', 'cat9lives', 0);
+(1, 'Bruce', 'Wayne', 'brucewayne', 'batMan123', 0),
+(2, 'James', 'Gordon', 'jimgordon', 'gothemPD911', 0),
+(3, 'Alfred', 'Pennyworth', 'alfredp', 'sup3rButl3r', 1),
+(4, 'Selina', 'Kyle', 'selinakyle', 'cat999lives', 0),
+(5, 'User', 'Userus', 'user', 'abc123', 0),
+(7, 'Admin', 'Adminus', 'admin', 'abc123', 1);
 
 -- --------------------------------------------------------
 
@@ -97,12 +99,12 @@ CREATE TABLE `vacations` (
 --
 
 INSERT INTO `vacations` (`vacationID`, `description`, `destination`, `picFileName`, `startDate`, `endDate`, `price`) VALUES
-(1, 'Ireland is known for its wide expanses of lush, green fields. In fact, its nickname is the Emerald Isle. But there are also large areas of rugged, rocky landscape.', 'Ireland', 'fe262004-1e5c-453d-96ed-bd0670b29083.jpg', '2020-04-23', '2020-04-26', '499'),
-(2, 'Madeira is a popular year-round resort. The region is noted for its Madeira wine, gastronomy, historical and cultural value, flora and fauna, landscapes and embroidery artisans.', 'Madeira', 'c9314b1e-c48a-4daa-a6e8-79b219a4a4d2.jpg', '2020-05-06', '2020-05-10', '399'),
-(3, 'London is the capital and largest city of England and the United Kingdom, and is considered to be one of the worlds most important global cities.', 'London', '14436709-2d83-4762-966c-2d314ef529ba.jpg', '2020-04-21', '2020-04-25', '599'),
-(5, 'Nevada is located in a mountainous region that includes vast semiarid grasslands and sandy alkali deserts. It is the most arid state of the country.', 'Nevada', '3c42d44f-a334-40d0-a275-27409f878049.jpg', '2020-05-14', '2020-05-28', '1299'),
-(6, 'Scotland is part of the island of Great Britain. This lush beautiful country is bursting with green spaces, lush forests, towering mountains and vast lochs (the Scottish word for lakes!).', 'Scotland', 'b2d13e89-1fbc-45bd-a776-d7cd917e72a5.jpg', '2020-05-12', '2020-05-26', '889'),
-(7, 'Peru is made up of a variety of landscapes, from mountains and beaches to deserts and rain forests. The capital Lima is located on the coast of the Pacific Ocean.', 'Peru', 'fe6bb127-2a5a-4102-9d6f-55ecaf1bfbdf.jpg', '2020-05-07', '2020-05-21', '1399');
+(1, 'Holiday package, the price is for one person in a room for two.', 'Rome', 'Rome1.jpg', '2020-04-06', '2020-04-10', '489'),
+(2, 'Charter flight, the price is for one person', 'Prague', 'Prague1.jpg', '2020-04-08', '2020-03-13', '479'),
+(3, 'Holiday package, the price is for one person in a room for two.', 'Thessaloniki', 'Thessaloniki1.jpg', '2020-04-10', '2020-04-13', '469'),
+(5, 'Holiday package, the price is for one person in a room for two.', 'Crete - on discount!', 'Crete1.jpg', '2020-04-09', '2020-04-12', '349'),
+(6, 'Holiday package, the price is for one person in a room for two.', 'Crete', 'Crete2.jpg', '2020-04-09', '2020-04-14', '400'),
+(7, 'Holiday package, the price is for one person in a room for two.', 'Rome - for a week!', 'Rome1.jpg', '2020-04-06', '2020-04-17', '529');
 
 --
 -- Indexes for dumped tables
@@ -137,7 +139,7 @@ ALTER TABLE `vacations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `vacations`
@@ -154,7 +156,7 @@ ALTER TABLE `vacations`
 --
 ALTER TABLE `followers`
   ADD CONSTRAINT `followers_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
-  ADD CONSTRAINT `followers_ibfk_2` FOREIGN KEY (`vacationID`) REFERENCES `vacations` (`vacationID`) ON DELETE CASCADE;
+  ADD CONSTRAINT `followers_ibfk_2` FOREIGN KEY (`vacationID`) REFERENCES `vacations` (`vacationID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
