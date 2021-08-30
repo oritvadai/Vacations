@@ -10,3 +10,7 @@
 .add-vacation img {
     width: 300px;
 }
+
+.add-vacation #submit-btn {
+    margin-bottom: 20px;
+}

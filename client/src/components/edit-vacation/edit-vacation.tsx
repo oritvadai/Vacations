@@ -219,7 +219,7 @@ export class EditVacation extends Component<any, EditVacationState> {
 
     public render(): JSX.Element {
         return (
-            <div className="add-vacation">
+            <div className="edit-vacation">
                 <Heading>Edit Vacation</Heading>
                 <form>
                     <input type="text" onChange={this.setDestination} value={this.state.vacation.destination || ""} /><br />
@@ -252,7 +252,7 @@ export class EditVacation extends Component<any, EditVacationState> {
                     <img src={this.state.preview} alt="" />
                     <br /><br />
 
-                    <button type="button" onClick={this.updateVacation} disabled={!this.isFormLegal()}>Submit</button>
+                    <button id="submit-btn" type="button" onClick={this.updateVacation} disabled={!this.isFormLegal()}>Submit</button>
                 </form>
             </div>
         );

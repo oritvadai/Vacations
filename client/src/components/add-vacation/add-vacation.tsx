@@ -252,7 +252,7 @@ export class AddVacation extends Component<any, AddVacationState> {
                     <img src={this.state.preview} alt="" />
                     <br /><br />
 
-                    <button type="button" onClick={this.addVacation} disabled={!this.isFormLegal()}>Submit</button>
+                    <button id="submit-btn" type="button" onClick={this.addVacation} disabled={!this.isFormLegal()}>Submit</button>
                 </form>
             </div>
         );
